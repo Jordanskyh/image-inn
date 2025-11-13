@@ -19,15 +19,17 @@ huggingface_token = ""
 
 max_bucket_reso = 2048
 max_data_loader_n_workers = 2
-max_grad_norm = 1
+max_grad_norm = 0.9
 max_token_length = 75
 min_bucket_reso = 256
 mixed_precision = "bf16"
+bf16 = true
+fp16 = false
 no_half_vae = true
 output_dir = "test_sdxl_sd3"
 output_name = "last"
 pretrained_model_name_or_path = ""
-prior_loss_weight = 1
+prior_loss_weight = 0.4
 resolution = "1024,1024"
 sample_prompts = ""
 sample_sampler = "euler_a"
@@ -50,18 +52,21 @@ train_batch_size = 4
 gradient_accumulation_steps = 1
 
 ###### optimizer ######
-optimizer_type = "adamw"
-optimizer_args = [ "betas=(0.9, 0.999)", "weight_decay=1e-04", "eps=1e-08",]
-unet_lr = 2e-5
+optimizer_type = "lion"
+optimizer_args = [ "weight_decay=0.0005", "betas=(0.95, 0.99)" ]
+unet_lr = 3e-5
 text_encoder_lr = 2e-6
 
 ###### lr scheduler ######
 lr_scheduler = "cosine"
 lr_warmup_steps = 25
+min_lr_ratio = 0.1
 
 ###### noise offset ######
-noise_offset_type = "Original"
-noise_offset = 0.0357
+noise_offset_type = "Multires"
+multires_noise_iterations = 6
+multires_noise_discount = 0.3
+noise_offset_dynamic = true
 
 ###### misc ######
 network_alpha = -1
@@ -70,8 +75,8 @@ network_module = "networks.lora"
 network_args = []
 network_dropout = 0
 caption_dropout_rate = 0
-clip_skip = 1
+clip_skip = 2
 max_timestep = 1000
-min_snr_gamma = 8
+min_snr_gamma = 3.5
 scale_weight_norms = 5
-seed = 2951032222
+seed = 2951032221
